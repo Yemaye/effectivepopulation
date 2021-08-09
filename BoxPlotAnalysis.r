@@ -178,22 +178,6 @@ p<-ggplot(res,aes(y=pop,x=meth,fill=meth))+
   theme(text=element_text(size=20),legend.position="none")
 p
 
-#plotting selected cluster
-mainarray<-largeo
-t<-75
-simul<-read.table("City_Confirmed_0115_0816_infected.csv",header=T,sep=',',fill=T)
-df<-data.frame(city=factor(rep(paste(simul[mainarray,1],simul[mainarray,2],sep=" "),each=(t+1))),
-               infec=c(t(as.vector(simul[mainarray,3:(t+3)]))),
-               days=c(0:t))
-
-p<-ggplot(df,aes(y=infec,x=days,group=city,color=city))+geom_line(size=1.25)+
-  ylab("Number of currently infected")+xlab("Days since January 15th, 2021")+
-  scale_x_continuous(limits=c(0,75),breaks=c(0,25,50,75))+
-  theme_light()+
-  theme(text=element_text(size=20))+
-  scale_colour_discrete("City Province")
-p
-
 #beta*N for fixed gamma
 df=data.frame(Location=locpop[,3],pop=locpop[,2],Method="Fixed gamma",InForce=betas[,8]*meann[,4])
 df$Location<-factor(df$Location,levels=df$Location[order(df$pop)])
