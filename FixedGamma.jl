@@ -126,23 +126,4 @@ trueprob=ODEProblem(f,[1,0],truespan,p1)
 truesol=solve(trueprob,Vern9(),saveat=truet)
 trueplot=plot(truesol,vars=(0,1),xlims=[0.0,150.0],legend=false,color="black",linewidth=5)
 
-#Plotting the first row in your data
-data1=dim[1,:]
-newdata1=float.(dim[1,sir(data1)[1]:sir(data1)[2]])
-t1=collect(1.0:float(length(newdata1)))
-tspan=(t1[1],t1[end])
-
-#Plotting all data and the solution together, produces subplots of figure 2
-plot1=plot(t1,newdata1,legend=false,xlims=[0.0,150.0],palette=:Dark2_8)
-for j in 2:n #Adding other if needed
-    datas=dim[j,:]
-    newdata=float.(dim[j,sir(datas)[1]:sir(datas)[2]])
-    t=collect(1.0:float(length(newdata)))
-        plot!(plot8,t,newdata,legend=false,xlims=[0.0,150.0],palette=:Dark2_8)
-
-end
-plot1
-plot!(truesol,vars=(0,1),xlims=[0.0,75.0],legend=false,color="black",
-linewidth=3, xlabel="Days since introduction",ylabel="Active infections",size=(600,400),guidefontsize=12)
-#Adding the true solution
-savefig(plot1,"simulations/gamma_sim_25_5000.png")#Saving
+#Repeat for each setting and save it to CSV file to be plotted alognside with data
