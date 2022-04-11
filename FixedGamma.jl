@@ -12,7 +12,7 @@ using LaTeXStrings
 
 #Simulated data, change the path,names
 di=DataFrame(CSV.File("simulations\\infec_5000_25.csv",header=false)) #data on daily infected, I-data
-dr=DataFrame(CSV.File("simulations\\remov_5000_25.csv",header=false)) #data on daily removed, R-data
+dr=DataFrame(CSV.File("simulations\\remov_5000_25.csv",header=false)) #data on daily removed, R-data (not required)
 dim=Matrix(di) #transforming into matrices
 drm=Matrix(dr)
 dtm=dim.+drm #total daily affected
@@ -20,7 +20,7 @@ dtm=dim.+drm #total daily affected
 #Real data on Chinese cities. The first two entries are the name of a city and a prefecture
 df=DataFrame(CSV.File("City_Confirmed_0115_0816_infected.csv")) #I-data
 df1=Matrix(df)
-dg=DataFrame(CSV.File("City_Confirmed_0115_0816_total.csv")) #I+R-data
+dg=DataFrame(CSV.File("City_Confirmed_0115_0816_total.csv")) #I+R-data (not required)
 dg1=Matrix(dg)
 
 #Important functions
@@ -38,7 +38,7 @@ end
 function lss(u,time, phi) #Extracts I-data from the solution of the system, created by function f
     tspan=(time[1],time[end])
     prob=ODEProblem(f,u,tspan,phi)
-    sol=solve(prob,Vern9(),saveat=time)
+    sol=solve(prob,Vern9(),saveat=time) 
     estimated=reduce(hcat,sol.u)
     return estimated[1,:]
 end
@@ -132,7 +132,7 @@ newdata1=float.(dim[1,sir(data1)[1]:sir(data1)[2]])
 t1=collect(1.0:float(length(newdata1)))
 tspan=(t1[1],t1[end])
 
-#Plotting all data and the solution togethether
+#Plotting all data and the solution together, produces subplots of figure 2
 plot1=plot(t1,newdata1,legend=false,xlims=[0.0,150.0],palette=:Dark2_8)
 for j in 2:n #Adding other if needed
     datas=dim[j,:]
@@ -144,5 +144,5 @@ end
 plot1
 plot!(truesol,vars=(0,1),xlims=[0.0,75.0],legend=false,color="black",
 linewidth=3, xlabel="Days since introduction",ylabel="Active infections",size=(600,400),guidefontsize=12)
-#Addinf the true solution
+#Adding the true solution
 savefig(plot1,"simulations/gamma_sim_25_5000.png")#Saving
