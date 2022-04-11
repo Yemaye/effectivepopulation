@@ -3,7 +3,7 @@ library(ggmap)
 library(forcats)
 library(maps)
 library(maptools)
-
+#Producting Figure 1
 #map of whole China
 chinamap<-map_data("world", "China")
 #China cities data
