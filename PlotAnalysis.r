@@ -102,6 +102,14 @@ p<-ggplot(df, aes(y=Location, x=Mean_N, group=Method, color=sizeo)) +
 p
 
 #Figure 6, boxplot for the infection force beta*N from all cities. Adds clustering
+df1=data.frame(Location=locpop[largeo,3],Mean_N=meann[largeo,4],Method="Fixed gamma",
+            pop=locpop[largeo,2],sizeo="largeo",InForce=betas[largeo,8]*meann[largeo,4],bet=betas[largeo,8])
+df2=data.frame(Location=locpop[bigo,3],Mean_N=meann[bigo,4],Method="Fixed gamma",
+               pop=locpop[bigo,2],sizeo="bigo",InForce=betas[bigo,8]*meann[bigo,4],bet=betas[bigo,8])
+df3=data.frame(Location=locpop[mediumo,3],Mean_N=meann[mediumo,4],Method="Fixed gamma",
+               pop=locpop[mediumo,2],sizeo="mediumo",InForce=betas[mediumo,8]*meann[mediumo,4],bet=betas[mediumo,8])
+df4=data.frame(Location=locpop[smallo,3],Mean_N=meann[smallo,4],Method="Fixed gamma",
+               pop=locpop[smallo,2],sizeo="smallo",InForce=betas[smallo,8]*meann[smallo,4],bet=betas[smallo,8])
 df<-rbind(df1,df2,df3,df4)
 df$Location<-factor(df$Location,levels=df$Location[order(df$pop)])
 #Plotting, can change to see beta alone
