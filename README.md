@@ -1,4 +1,4 @@
-# Effective population size in SIR models
+# Effective population size in simple infectious disease models
 
 Madi Yerlanov, Caroline Colijn, and Jessica E Stockdale
 
