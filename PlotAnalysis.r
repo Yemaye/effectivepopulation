@@ -51,9 +51,9 @@ p
 
 #Figure 3, produces boxplots for Neffective for a given setting
 #Change the file according to the setting. The file should contain Neff computed by the Fixed gamma method
-fixedg<-read.table("sim_fitting_35_1000.csv",header=F,sep=',')
-res<-data.frame(fixedg[,4])
-names(res)[names(res)=="fixedg...4."]<-"Population"
+fixedg<-read.table("Neff_sim_1000_25.csv",header=F,sep=',')
+res<-data.frame(fixedg[,1])
+names(res)[names(res)=="fixedg...1."]<-"Population"
 #Removing outliers
 q1<-unname(quantile(res$Population,1/4))
 q2<-unname(quantile(res$Population,3/4))
@@ -67,23 +67,24 @@ p<-ggplot(res1,aes(y=Population,x=""))+
   xlab(expression("")) + ylab("Effective population size")+
   theme_light()+
   geom_hline(yintercept=1000,color='blue',size=2)+
-  labs(caption=expression("f) N = 1000, "~beta~"= 0.0007, "~gamma~"= 0.2"))+
+  labs(caption=expression("a) N = 1000, "~beta~"= 0.0005, "~gamma~"= 0.2"))+
   #coord_cartesian(ylim=c((q1-1.5*Iq),(q2+1.5*Iq)))+
   theme(aspect.ratio = 1.9,legend.position = "none")+
   theme(axis.text=element_text(size=14),
         axis.title=element_text(size=14),plot.caption = element_text(size=16,hjust=0.5))
 p
+#Repeat for each setting, change the name of csv file, mean and caption.
 
 #Figures 4 and 5, produces Neffective (lower CI, optimum, upper CI) for a given city and allows to compare with others
 #note that it would be difficult to represent all the clusters simultaneously, so we have to group
-df1=data.frame(Location=locpop[largeo,3],Mean_N=meann[largeo,4],Method="Fixed gamma",
-               lowerCI=lowern[largeo,4],upperCI=uppern[largeo,4], pop=locpop[largeo,2],sizeo="largeo")
-df2=data.frame(Location=locpop[bigo,3],Mean_N=meann[bigo,4],Method="Fixed gamma",
-               pop=locpop[bigo,2],sizeo="bigo",lowerCI=lowern[bigo,4],upperCI=uppern[bigo,4])
-df3=data.frame(Location=locpop[mediumo,3],Mean_N=meann[mediumo,4],Method="Fixed gamma",
-               pop=locpop[mediumo,2],sizeo="mediumo",lowerCI=lowern[mediumo,4],upperCI=uppern[mediumo,4])
-df4=data.frame(Location=locpop[smallo,3],Mean_N=meann[smallo,4],Method="Fixed gamma",
-               pop=locpop[smallo,2],sizeo="smallo",lowerCI=lowern[smallo,4],upperCI=uppern[smallo,4])
+df1=data.frame(Location=locpop[largeo,3],Mean_N=meann[largeo,1],Method="Fixed gamma",
+               lowerCI=lowern[largeo,1],upperCI=uppern[largeo,1], pop=locpop[largeo,2],sizeo="largeo")
+df2=data.frame(Location=locpop[bigo,3],Mean_N=meann[bigo,1],Method="Fixed gamma",
+               pop=locpop[bigo,2],sizeo="bigo",lowerCI=lowern[bigo,1],upperCI=uppern[bigo,1])
+df3=data.frame(Location=locpop[mediumo,3],Mean_N=meann[mediumo,1],Method="Fixed gamma",
+               pop=locpop[mediumo,2],sizeo="mediumo",lowerCI=lowern[mediumo,1],upperCI=uppern[mediumo,1])
+df4=data.frame(Location=locpop[smallo,3],Mean_N=meann[smallo,1],Method="Fixed gamma",
+               pop=locpop[smallo,2],sizeo="smallo",lowerCI=lowern[smallo,1],upperCI=uppern[smallo,1])
 df<-rbind(df1,df2,df3) #Choose this for 3 clusters with Imax>=100
 df<-df4 #Choose this for the cluster with Imax<100
 
@@ -102,14 +103,14 @@ p<-ggplot(df, aes(y=Location, x=Mean_N, group=Method, color=sizeo)) +
 p
 
 #Figure 6, boxplot for the infection force beta*N from all cities. Adds clustering
-df1=data.frame(Location=locpop[largeo,3],Mean_N=meann[largeo,4],Method="Fixed gamma",
-            pop=locpop[largeo,2],sizeo="largeo",InForce=betas[largeo,8]*meann[largeo,4],bet=betas[largeo,8])
-df2=data.frame(Location=locpop[bigo,3],Mean_N=meann[bigo,4],Method="Fixed gamma",
-               pop=locpop[bigo,2],sizeo="bigo",InForce=betas[bigo,8]*meann[bigo,4],bet=betas[bigo,8])
-df3=data.frame(Location=locpop[mediumo,3],Mean_N=meann[mediumo,4],Method="Fixed gamma",
-               pop=locpop[mediumo,2],sizeo="mediumo",InForce=betas[mediumo,8]*meann[mediumo,4],bet=betas[mediumo,8])
-df4=data.frame(Location=locpop[smallo,3],Mean_N=meann[smallo,4],Method="Fixed gamma",
-               pop=locpop[smallo,2],sizeo="smallo",InForce=betas[smallo,8]*meann[smallo,4],bet=betas[smallo,8])
+df1=data.frame(Location=locpop[largeo,3],Mean_N=meann[largeo,1],Method="Fixed gamma",
+               pop=locpop[largeo,2],sizeo="largeo",InForce=betas[largeo,1]*meann[largeo,1],bet=betas[largeo,1])
+df2=data.frame(Location=locpop[bigo,3],Mean_N=meann[bigo,1],Method="Fixed gamma",
+               pop=locpop[bigo,2],sizeo="bigo",InForce=betas[bigo,1]*meann[bigo,1],bet=betas[bigo,1])
+df3=data.frame(Location=locpop[mediumo,3],Mean_N=meann[mediumo,1],Method="Fixed gamma",
+               pop=locpop[mediumo,2],sizeo="mediumo",InForce=betas[mediumo,1]*meann[mediumo,1],bet=betas[mediumo,1])
+df4=data.frame(Location=locpop[smallo,3],Mean_N=meann[smallo,1],Method="Fixed gamma",
+               pop=locpop[smallo,2],sizeo="smallo",InForce=betas[smallo,1]*meann[smallo,1],bet=betas[smallo,1])
 df<-rbind(df1,df2,df3,df4)
 df$Location<-factor(df$Location,levels=df$Location[order(df$pop)])
 #Plotting, can change to see beta alone
@@ -128,10 +129,10 @@ p
 
 #Figure 7 and S1, correlation plot for N*/N and distance to Wuhan (and N^* and final size)
 #need slightly a different database, but f and g are simular and could be combined
-dg1=data.frame(Mean_N=meann[largeo,4],pop_n=pop[largeo,2],dist=pop[largeo,3],finsize=pop[largeo,5],outbreak_size="Large outbreak")
-dg2=data.frame(Mean_N=meann[bigo,4],pop_n=pop[bigo,2],dist=pop[bigo,3],finsize=pop[bigo,5],outbreak_size="Big outbreak")
-dg3=data.frame(Mean_N=meann[mediumo,4],pop_n=pop[mediumo,2],dist=pop[mediumo,3],finsize=pop[mediumo,5],outbreak_size="Medium outbreak")
-dg4=data.frame(Mean_N=meann[smallo,4],pop_n=pop[smallo,2],dist=pop[smallo,3],finsize=pop[smallo,5],outbreak_size="Small outbreak")
+dg1=data.frame(Mean_N=meann[largeo,1],pop_n=pop[largeo,2],dist=pop[largeo,3],finsize=pop[largeo,5],outbreak_size="Large outbreak")
+dg2=data.frame(Mean_N=meann[bigo,1],pop_n=pop[bigo,2],dist=pop[bigo,3],finsize=pop[bigo,5],outbreak_size="Big outbreak")
+dg3=data.frame(Mean_N=meann[mediumo,1],pop_n=pop[mediumo,2],dist=pop[mediumo,3],finsize=pop[mediumo,5],outbreak_size="Medium outbreak")
+dg4=data.frame(Mean_N=meann[smallo,1],pop_n=pop[smallo,2],dist=pop[smallo,3],finsize=pop[smallo,5],outbreak_size="Small outbreak")
 #Plotting those correlations
 dg<-rbind(dg1,dg2,dg3,dg4)
 dg$outbreak_size<-factor(dg$outbreak_size,levels=c("Large outbreak","Big outbreak","Medium outbreak","Small outbreak"))
@@ -149,8 +150,8 @@ q<-ggplot(dg,aes(y=Mean_N/pop_n*10^-6,x=dist,group=outbreak_size,color=outbreak_
 q
 
 #Figure S2, creates a boxplots to compare N^* produced by fixed gamma (LSQ) and survival analysis (SDS) methods
-sellke<-read.table("Sellke_N.csv",header=F,sep=',') #reading N's for a given setting
-fixedg<-read.table("Fixedg_N.csv",header=F,sep=',') #Our file contained N's for all settings
+sellke<-read.table("Sellke_N.csv",header=F,sep=',') #reading N's for a given setting, this is obtained from SimulatingData.R
+fixedg<-read.table("Fixedg_N.csv",header=F,sep=',') #Our file contained N's for all settings, this is Obtained from FixedGammaSimulated.jl
 #res<-data.frame(sellke[,1],fixedg[,1])
 i=2 #Fix the setting
 #Change the last part so that it matches with the setting and the number of data's
