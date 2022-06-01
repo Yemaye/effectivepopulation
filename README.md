@@ -2,9 +2,25 @@
 
 Madi Yerlanov, Caroline Colijn, and Jessica E Stockdale
 
-The given repository is created to accomany the correspoding paper. It contains the relevant data and codes to analyse this data. The programming languages being used are Julia (for numerical computation) and R (for result analysis). The codes also include the building and application of the main method used in this paper - fixed gamma. Relevant comments are present to provide descriptions, explanations and warnings. Further details such as theory, results and discussion are in the paper.
+This repository accompanies the above paper, and contains all relevant data and code to replicate the analyses within. The programming languages used are Julia (for numerical computation) and R (for analysis of results).
 
-The main data is COVID-19 outbreak in China (selected cities). "Chinese cities data" folder contains files City_Confirmed_0115_0816_infected.csv (active infections) and City_Confirmed_0115_0816_recovered.csv (total recovered) that was obtained from Harvard Database. The columns represent dates in format MM/DD. The rows represent cities. Note that the numbers represent current situations and not new infections/removals. Any data that is used must be in similar format. The folder also contains other data such as census population size and estimation such N effective.
+## COVID-19 outbreaks in China - 'Chinese Cities Data'
+
+This folder contains data and analysis results on outbreaks of COVID-19 in 53 cities in China. Dta was obtained from Harvard Dataverse; we thank the owners of this data for making it publicly available, 
+
+**Harvard Dataverse: China Data Lab, 2020, "China COVID-19 Daily Cases with Basemap", https://doi.org/10.7910/DVN/MR5IJN, Harvard Dataverse, V38, UNF:6:BmhcC5NqO9pMzMyBUcfmtQ== [fileUNF]**.  
+
+Files:  
+**City_Confirmed_0115_0816_infected.csv**  - Data: daily active case counts per city  
+**City_Confirmed_0115_0816_recovered.csv** - Data: daily total recovered counts per city   
+Column headers represent dates in MM/DD format. If you are applying the code in this repository to other datasets, note that the numbers here represent total active cases and removals, not incident.  
+**china_pop.csv** - Data: Census population size of each city, in millions. Final column contains a combined format (City, CPS) used for plotting.  
+**china_pop2.csv** - Data: Further city-level information used for plotting: census population size, distance to Wuhan, maximum daily active cases I_max and final size R_infinity.  
+**China_Betas.csv** - Results: estimates of parameter beta per city
+**China_Ns.csv** - Results: estimates of parameter N* per city
+**China_Ns_lower.csv** - Results: lower confidence interval for parameter N* per city
+**China_Ns_upper.csv** - Results: upper confidence interval for parameter N* per city
+**true_sol.csv** - Results: solution to the determenistic system of equation for given settings
 
 The data (simulated or real) in .csv is analysed using FixedGamma.jl, where relative parameters are computed using fixed gamma method. These parameters include the effective population size (N*), infection rate (beta), etc. Note that simulated data do not have any headings for rows, so there are some difference in the way how you work with data. 
 
