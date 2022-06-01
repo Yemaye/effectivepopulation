@@ -6,7 +6,7 @@ This repository accompanies the above paper, and contains all relevant data and 
 
 ## COVID-19 outbreaks in China - 'Chinese Cities Data'
 
-This folder contains data and analysis results on outbreaks of COVID-19 in 53 cities in China. Dta was obtained from Harvard Dataverse; we thank the owners of this data for making it publicly available, 
+This folder contains data and analysis results on outbreaks of COVID-19 in 53 cities in China. Data was obtained from Harvard Dataverse; we thank the owners of this data for making it publicly available, 
 
 **Harvard Dataverse: China Data Lab, 2020, "China COVID-19 Daily Cases with Basemap", https://doi.org/10.7910/DVN/MR5IJN, Harvard Dataverse, V38, UNF:6:BmhcC5NqO9pMzMyBUcfmtQ== [fileUNF]**.  
 
@@ -20,14 +20,26 @@ Column headers represent dates in MM/DD format. If you are applying the code in 
 **China_Ns.csv** - Results: estimates of parameter N* per city
 **China_Ns_lower.csv** - Results: lower confidence interval for parameter N* per city
 **China_Ns_upper.csv** - Results: upper confidence interval for parameter N* per city
-**true_sol.csv** - Results: solution to the determenistic system of equation for given settings
 
-The data (simulated or real) in .csv is analysed using FixedGamma.jl, where relative parameters are computed using fixed gamma method. These parameters include the effective population size (N*), infection rate (beta), etc. Note that simulated data do not have any headings for rows, so there are some difference in the way how you work with data. 
+## Simulated outbreaks - 'Simulated Data'
 
-MappingOutbreak.r is used to locate selected Chinese cities. The cities are clustered according to the number of maximum infected (Imax) in a day. Red denotes that outbreaked reached over 1000 currently infected in at least one day. Similarly, the other colors denote, orange: 250-999, yellow: 100-249 and green: 50-99 respectively. The code produces figure 2 in paper.
+This folder contains simulated outbreak data, for the main text analysis where 1000 outbreaks are simulated under 6 scenarios and for the supplementary comparison with the SDS approach. 
 
-SimulatingData.r allows to produce simulated outbreak data that FixedGamma.jl can work with. There are two types of simulations. The first one used the Gillepsie algorithm and it is the main one for this paper. Given rates and the population size, the code gives the infected and removed data. We have 6 settings for which we test the fixed gamma method. The second simulation uses survival dynamical system introduced by KhudaBukhsh et al. Along with the simulation, the population size can be computed. In this manner, two methods can be compared. Simulated outbreak data is contained in folder "Simulated data".
+Files:  
+**infec_####_##.csv** - Data: contains 1000 simulated outbreaks for the simulation scenario described by the #. The first 3-4 digits represent the true population size (500-1000-5000). The second pair of digits represent the basic reproduction number (1.5,2.5,3.5).
+**true_sol.csv** - Deterministic system solution for the 6 scenarios simulated above.
+**Sellke_infec_####_##.csv** -  Data: contains simulated outbreaks using SDS approach for supplementary analysis. # has the same meaning as above. Note, only the first 20 outbreaks in each csv were used.
 
-PlotAnalysis.r contains several codes to produce various plots (Figure 1, 3-7 and S1, S2). It mainly uses data and the results of FixedGamma.jl, i.e. N* and other parameter estimates. However, when analysing the real data, one needs other relevant information. In our case, there are tables containing information on census population size of selected, Chinese cities and distances to Wuhan. For further analysis, other data points must also be present in the table format such Imax and final size (Rinfinity). The clustering according to Imax (thus matching MappingOutbreak.jl) is done whenever possible. If there are different settings involved, then each setting data must be analysed separately and then combined in a grid. The code does not produce any number, such as averages, however, these computations can be performed along the way using few commands.
+## Analysis scripts - 'FixedGammaChina.jl/FixedGammaSimulated.jl'
+These scripts perform the data (simulated or China COVID-19) analysis: fitting an SIR model using least squares to estimate the effective population size (N*) and infection rate (beta), given a fixed value of removal rate gamma. csv files containing the parameter estimates are output. 
+
+## Plotting script - PlotAnalysis.r 
+This script contains code to produce the manuscript plots (Figures 1, 3-7, S1, S2), using data and the output csv files generated in the above FixedGamma.jl scripts. 
+
+## Simulating outbreaks - SimulatingData.r 
+This script produces the simulated outbreak data in folder 'Simulated Data', for use in FixedGammaSimulated.jl. There are two types of simulations: the first uses the Gillepsie algorithm for the simulation study in the main text of this paper, the second uses the survival dynamical system approach introduced by KhudaBukhsh et al. [https://doi.org/10.1098/rsfs.2019.0048] used in the supplementary analysis.
+
+## Mapping of China data - MappingOutbreak.r
+This script creates a map for the 53 Chinese cities used in the COVID-19 analysis, where cities are coloured according to their maximum daily active cases (Imax) - figure 2 in paper.
 
 any questions can be addressed to madi dot yerlanov dot colorado dot edu
