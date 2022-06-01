@@ -1,6 +1,4 @@
-Given rates and the population size, the code gives the infected and removed data. We have 6 settings for which we test the fixed gamma method. The second simulation uses survival dynamical system introduced by KhudaBukhsh et al. Along with the simulation, the population size can be computed. In this manner, two methods can be compared.
-
-infec_####_##.csv contains 1000 simulation for the given setting. The first 3-4 digits represent the true population size (500-1000-5000). The second pair of digits represent the basic reproduction number (1.5,2.5,3.5). In general, the true gamma is fixed at 0.2 and beta is changed to achieve the target R0. If there is "m" at the end, it means that there modified rates, i.e. gamma=0.1 and beta=0.00025. The data is simulated using MCMC method. 
+infec_####_##.csv contains 1000 simulation for the given setting. The first 3-4 digits represent the true population size (500-1000-5000). The second pair of digits represent the basic reproduction number (1.5,2.5,3.5). In general, gamma is fixed at 0.2 and beta is changed to achieve the target R0. If there is "m" at the end, it means that there modified rates, i.e. gamma=0.1 and beta=0.00025.
 
 Sellke_infec_####_##.csv has the same meaning for numbers. The data is simulated using SDS method (KhudaBukhsh et al).  Note only the first 20 were used for evaluations.
 
