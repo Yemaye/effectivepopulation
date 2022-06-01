@@ -113,7 +113,7 @@ nrepeat = 2000; # number of posterior sample;
 sim.num= burn + nrepeat * thin; # total number of simulation 
 
 #initial parameter setting
-k1 = 0.25; k2 = 0.1 ; k3 = 0.001; n=1000; T.max = 200; 
+k1 = 0.5; k2 = 0.2 ; k3 = 0.001; n=1000; T.max = 200; 
 beta=k1; gamma=k2; rho=k3;
 pop.data = Sellke(n=n, rho=k3, beta=k1, gamma=k2, Tmax = T.max)
 
@@ -125,20 +125,21 @@ discrI<-c(1)
 for (i in 1:length(emp.sir$I)){
   discrI<-append(discrI,tail(emp.sir$I[ceiling(emp.sir$time)==i],n=1))
 } 
-write.table(t(discrI), "infec_Sellke_run.csv", row.names=FALSE,col.names = FALSE,append=T,sep=',')
+write.table(t(discrI), "infec_Sellke_1000_25.csv", row.names=FALSE,col.names = FALSE,append=T,sep=',')
 
 
 discrR<-c(0)
 for (i in 1:length(emp.sir$R)){
   discrR<-append(discrR,tail(emp.sir$R[ceiling(emp.sir$time)==i],n=1))
 } 
-write.table(t(discrR), "remov_Sellke_run.csv", row.names=FALSE,col.names = FALSE,append=T,sep=',')
+write.table(t(discrR), "remov_Sellke_1000_25.csv", row.names=FALSE,col.names = FALSE,append=T,sep=',')
 
 #Saving SDS data
 sds  <- SDS.MCMC(data = pop.data, Tmax=T.max, fitn = T, nrepeat = sim.num, 
                  prior.a=c(0.001,0.001,0.001), prior.b=c(0.001,0.001,0.001), ic = c(k1, k2, k3, n))
 write.table(t(c(mean(sds[,1]),mean(sds[,2]),mean(sds[,4]))),"sds_Sellke_25_1000.csv",row.names = F,
             col.names = F,append = F,sep=",")
+#Combine the third column from each setting into one, named "Sellke_N.csv" to compare.
 
 #If more simulations are needed
 i<-0
