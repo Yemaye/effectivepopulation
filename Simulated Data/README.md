@@ -3,3 +3,5 @@ infec_####_##.csv contains 1000 simulation for the given setting. The first 3-4 
 Sellke_infec_####_##.csv has the same meaning for numbers. The data is simulated using SDS method (KhudaBukhsh et al).  Note only the first 20 were used for evaluations.
 
 true_sol.csv Contains solution data to the determenistic system of equation for given settings
+
+Note that simulated data do not have any headings for rows
