@@ -11,8 +11,8 @@ using StatsBase
 using LaTeXStrings
 
 #Simulated data, change the path,names
-di=DataFrame(CSV.File("simulations\\infec_1000_25.csv",header=false)) #data on daily infected, I-data
-dr=DataFrame(CSV.File("simulations\\remov_1000_25.csv",header=false)) #data on daily removed, R-data
+di=DataFrame(CSV.File("simulations\\infec_1000_25g.csv",header=false)) #data on daily infected, I-data
+dr=DataFrame(CSV.File("simulations\\remov_1000_25g.csv",header=false)) #data on daily removed, R-data
 dim=Matrix(di) #transforming into matrices
 drm=Matrix(dr)
 dtm=dim.+drm #total daily affected
@@ -45,7 +45,7 @@ Gammaiv=0.2 #Intial point for the gamma (fixed in this case)
 p1=[Betaiv,Gammaiv,Niv]
 
 #Use for simulated data (where the columns do not contain non-numerical values such as city names)
-L=zeros(n,8)
+L=zeros(n,9)
 p2=[p1[3],p1[1]]
 @time begin
 for i in 1:n
@@ -66,7 +66,7 @@ for i in 1:n
         return estimated[1,:]
     end
     lssk(ti,pi)=lss(idata,ti,pi) #Data-fixed function
-    fir4=curve_fit(lssk,tdata,ndata,p3) #LSQ fitting
+    fir4=curve_fit(lssk,tdata,ndata,p2) #LSQ fitting
     L[i,1:2]=fir4.param #Returns N* and beta
     L[i,3]=confidence_interval(fir4,0.05)[1][1] #CI for N
     L[i,4]=confidence_interval(fir4,0.05)[1][2]
@@ -74,13 +74,23 @@ for i in 1:n
     L[i,6]=confidence_interval(fir4,0.05)[2][2]
     L[i,7]=dot(fir4.resid,fir4.resid) #SSE
     L[i,8]=ind[2] #Last day of the outbreak
+    if Niv>=L[i,3] && Niv<=L[i,4]
+        L[i,9]=1
+    else
+        L[i,9]=0
+    end
 end
 end
 
 #Saving the results, in this case, eff. pop. size
 Neff=zeros(n,1)
 Neff[:,1]=L[:,1]
-CSV.write("Neff_sim_1000_25.csv",  DataFrame(Neff), writeheader=false)
+CSV.write("Neff_sim_1000_25.csv",  DataFrame(Neff,:auto), writeheader=false)
+
+#Saving the information if the true population size is within CI'S
+Ncov=zeros(n,1)
+Ncov[:,1]=L[:,9]
+CSV.write("Ncov_sim_1000_25.csv",  DataFrame(Ncov,:auto), writeheader=false)
 
 #Repeat this process for the each setting, combine them into the single .csv "Fixedg_N.csv",
 #where each column is the setting and each row is N*.
