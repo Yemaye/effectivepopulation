@@ -1,8 +1,8 @@
 # Effective population size in simple infectious disease models
 
-Madi Yerlanov, Caroline Colijn, and Jessica E Stockdale
+Madi Yerlanov, Piyush Agarwal, Caroline Colijn, and Jessica E Stockdale
 
-This repository accompanies the above paper, and contains all relevant data and code to replicate the analyses within. The programming languages used are Julia (for numerical computation) and R (for analysis of results).
+This repository accompanies the above paper, and contains all relevant data and code to replicate the analyses within. The programming languages used are Julia and Python (for numerical computation) and R (for analysis of results).
 
 ## COVID-19 outbreaks in China - 'Chinese Cities Data'
 
